@@ -1,0 +1,28 @@
+# Core dependencies for Narrative Agents
+# "Less is more" - Aristotle probably would approve
+
+# For prettier terminal output in examples
+colorama>=0.4.6
+
+# For data visualization in examples
+matplotlib>=3.7.0
+
+# For rich terminal formatting (making philosophy look good in the console)
+rich>=13.7.0
+
+# Development dependencies (optional)
+# Uncomment if you want to run tests
+# pytest>=7.4.0
+# pytest-cov>=4.1.0
+
+# Documentation generation (optional)
+# Uncomment if you want to generate docs
+# sphinx>=7.2.0
+# sphinx-rtd-theme>=2.0.0
+
+# Type hints support (because even philosophers need types)
+typing-extensions>=4.9.0
+
+# For JSON pretty printing in examples
+# (stdlib json works fine, but this is prettier)
+ujson>=5.9.0
