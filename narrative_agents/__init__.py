@@ -5,7 +5,12 @@ An implementation of Paul Ricoeur's narrative identity theory as agent architect
 """
 
 from .core import NarrativeAgent, Experience, Memory, Telos
-from .llm_core import LLMNarrativeAgent
+
+try:
+    from .llm_core import LLMNarrativeAgent
+except ImportError:
+    # anthropic SDK not installed — LLM agent unavailable
+    LLMNarrativeAgent = None
 
 __version__ = "0.2.0"
 __author__ = "Michal Valčo"

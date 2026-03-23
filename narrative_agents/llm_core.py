@@ -10,8 +10,7 @@ Requires: ANTHROPIC_API_KEY environment variable.
 """
 
 import os
-import json
-from typing import Dict, Any, List, Optional, Tuple
+from typing import Dict, Optional
 
 import anthropic
 
@@ -27,7 +26,7 @@ from .prompts import (
 # Cost-efficient model for per-experience calls (interpretation, relevance)
 DEFAULT_FAST_MODEL = "claude-haiku-4-5-20251001"
 # More capable model for reasoning-heavy calls (decisions, stories)
-DEFAULT_REASONING_MODEL = "claude-sonnet-4-5-20241022"
+DEFAULT_REASONING_MODEL = "claude-sonnet-4-6"
 
 
 class LLMNarrativeAgent(NarrativeAgent):
@@ -99,7 +98,8 @@ class LLMNarrativeAgent(NarrativeAgent):
 
     def _character_summary(self) -> str:
         """Build a compact character description for prompt context."""
-        parts = [f"Purpose (telos): {self.telos.value}"]
+        telos_label = self.telos.value if self.telos else "unspecified"
+        parts = [f"Purpose (telos): {telos_label}"]
         if self.virtues:
             top = sorted(self.virtues.items(), key=lambda x: x[1], reverse=True)[:3]
             parts.append(
@@ -125,6 +125,9 @@ class LLMNarrativeAgent(NarrativeAgent):
         LLM-powered emplotment: the experience is interpreted through the
         agent's telos by Claude, producing contextually rich meaning.
         """
+        if self.telos is None:
+            return super()._interpret_through_telos(exp)
+
         user_msg = (
             f"Agent name: {self.name}\n"
             f"Agent telos: {self.telos.value}\n"
