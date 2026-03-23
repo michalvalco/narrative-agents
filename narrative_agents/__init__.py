@@ -5,7 +5,8 @@ An implementation of Paul Ricoeur's narrative identity theory as agent architect
 """
 
 from .core import NarrativeAgent, Experience, Memory, Telos
+from .llm_core import LLMNarrativeAgent
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __author__ = "Michal Valčo"
-__all__ = ["NarrativeAgent", "Experience", "Memory", "Telos"]
+__all__ = ["NarrativeAgent", "LLMNarrativeAgent", "Experience", "Memory", "Telos"]
