@@ -135,6 +135,7 @@ Thumbs.db
 
 # Project specific
 outputs/
+.env.example
 *.png
 *.jpg
 *.jpeg
