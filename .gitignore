@@ -135,7 +135,16 @@ Thumbs.db
 
 # Project specific
 outputs/
-.env.example
 *.png
 *.jpg
 *.jpeg
+
+# Archived working folder (read-only history; OneDrive backs it up)
+_Archive/
+
+# Read-only reference clones (commit hashes recorded in Sources/)
+vendor/
+
+# Experiment recordings (large; runs/INDEX.md is the committed index)
+runs/*
+!runs/INDEX.md
