@@ -25,4 +25,6 @@ _SCRIPTS = os.path.join(
 _CLI = os.path.join(_SCRIPTS, "arc_cli.py")
 
 sys.path.insert(0, _SCRIPTS)  # arc_cli.py imports the arc_skill package beside it
-sys.exit(runpy.run_path(_CLI, run_name="__main__"))
+# arc_cli exits via SystemExit itself; run_path returns a globals dict on any
+# other path, which must not become the process exit status.
+runpy.run_path(_CLI, run_name="__main__")

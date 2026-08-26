@@ -11,6 +11,7 @@ import sys
 
 import matplotlib
 matplotlib.use('Agg')  # headless before pyplot is imported anywhere
+import matplotlib.pyplot as plt
 
 import numpy as np
 import pytest
@@ -49,7 +50,7 @@ def test_full_benchmark_figure_renders(tmp_path):
     assert out.exists()
     assert out.stat().st_size > 10_000  # a real rendered figure, not a stub
     assert len(fig.axes) >= 4  # 2x2 grid (colorbar may add an extra axes)
-    matplotlib.pyplot.close(fig)
+    plt.close(fig)
 
 
 def test_ported_pipeline_builds_viz_data_offline(tmp_path, monkeypatch):
