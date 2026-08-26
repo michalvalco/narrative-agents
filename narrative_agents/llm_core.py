@@ -48,8 +48,13 @@ class LLMNarrativeAgent(NarrativeAgent):
         api_key: Optional[str] = None,
         fast_model: str = DEFAULT_FAST_MODEL,
         reasoning_model: str = DEFAULT_REASONING_MODEL,
+        **core_kwargs,
     ):
-        super().__init__(name=name, telos=telos, context_window=context_window)
+        # core_kwargs forwards the selection-rule parameters
+        # (selection= / budget= / floor= / expected_n=) unchanged.
+        super().__init__(
+            name=name, telos=telos, context_window=context_window, **core_kwargs
+        )
 
         key = api_key or os.environ.get("ANTHROPIC_API_KEY")
         if not key:
