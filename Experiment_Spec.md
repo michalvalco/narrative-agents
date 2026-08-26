@@ -1,6 +1,6 @@
 # Experiment Spec — Memory-Schema Ablation on ARC-AGI-3
 
-**Version 0.1 — DRAFT, 2026-08-22** (Thinking-Layer design session; execution belongs to Claude Code). Status: proposed; Step 0 is the only approved action until Michal sets a budget ceiling (🔴). Companion documents: `Paper_Outline.md` (this repo), `Claude_Protocols/Harness_Design.md` §7 (why this experiment doubles as infrastructure R&D).
+**Version 0.1 — DRAFT, 2026-08-22** (Thinking-Layer design session; execution belongs to Claude Code). Status: **ruled 2026-08-26** — Step 0 approved and running, $50 ceiling set, tier/telos/runs decided (§8). Companion documents: `Paper_Outline.md` (this repo), `Claude_Protocols/Harness_Design.md` §7 (why this experiment doubles as infrastructure R&D).
 
 ---
 
@@ -65,9 +65,11 @@ Primary hypothesis: C ≥ B on (1) with lower (2) and (3), at equal (5). Null re
 
 ## 4. Cost control — Step 0 before anything else
 
-**Step 0 (approved in principle; ~1 hour of Michal's time):** one game (sb26), arm B, one seed. Purpose: measure tokens per action and per compaction with prompt caching on the skill text. Multiply by 24 cells → the pilot's price. **Budget ceiling is Michal's decision (🔴) and is set after this number exists, not before.**
+**Step 0 (approved in principle; ~1 hour of Michal's time):** one game (sb26), arm B, one seed. Purpose: measure tokens per action and per compaction with prompt caching on the skill text. Multiply by 24 cells → the pilot's price. **Budget ceiling is Michal's decision (🔴).** *(Ruled 2026-08-26: he set $50 ahead of the number — §8.2 — to be revisited once Step 0 reports; the set-after-measurement principle stands for the revisit.)*
 
 If Step 0's number is acceptable: the pilot runs as a Claude Code routine / managed agent in the background during September–October; Michal reads results in November. Zero attention before then.
+
+**Step 0 EXECUTED 2026-08-26** (sb26, arm B, `claude-sonnet-5`, 60 paid actions in two 30-action segments, one true forced handoff): **5,703 tokens/action blended** (4,508 easy-progress, 6,898 puzzle-grind), prediction accuracy 85%, **post-handoff burn 0**, both handoff notes under the 1,200-token cap. Dollar bounds and pilot arithmetic: `runs/step0/COST_NOTES.md`. Headline: the full-spec pilot does not fit the $50 ceiling on any tier (≈$120–1,400 API-billed); an sb26-only pilot incl. the telos sub-study fits on Haiku 4.5 (≈$12–70, mid ≈$30); running the pilot as Claude Code subagents (as Step 0 did) spends subscription capacity, not API dollars. Game parked replayable at event 60, level 2/8 (L2's ordering rule resisted five hypotheses; rules-tier is the named next move).
 
 ---
 
@@ -127,12 +129,25 @@ Implementation: `PROMPT_Ablation_Setup_2026-08-22.md` Task D (flag-switched, off
 
 ---
 
-## 8. Open decisions (Michal)
+## 8. Open decisions (Michal) — **RULED 2026-08-26**
 
-1. Approve Step 0 (one game, one arm, one seed) — 🟡.
-2. Budget ceiling after Step 0 — 🔴.
-3. Model tier for the pilot (Sonnet-class recommended; Haiku-class if Step 0 prices high).
-4. Whether the telos sub-study runs in the pilot or waits for signal.
-5. Whether `runs/` recordings are committed (git-lfs) or kept local with an index.
+1. Approve Step 0 — ✅ **APPROVED** (2026-08-26).
+2. Budget ceiling — **$50 for now** (2026-08-26; set ahead of Step 0's number, revisit after it).
+3. Model tier — **Sonnet 5** (`claude-sonnet-5`, $2/$10 per MTok), per recommendation;
+   Haiku 4.5 ($1/$5) is the fallback if Step 0 prices the pilot above the ceiling.
+4. Telos sub-study — **runs in the pilot** (adds arm-C cells at a second telos).
+5. `runs/` recordings — **committed** (plain git, no LFS for now; `.gitignore`'s global
+   `*.png` keeps rendered frames out — they re-render from the recording via `arc view`).
+6. **Pilot shape (ruled 2026-08-26, relayed via the Claude_Protocols session):**
+   **sb26-only, 8 cells** — arms A and B × 2 seeds, plus arm C × two teloi
+   (EXPLORING / PERFORMING, the telos sub-study) × 2 seeds — run the
+   **subscription way** (segmented Claude Code subagents, exactly as Step 0 ran).
+   The $50 API ceiling stays untouched as reserve; the full-spec decision waits
+   for October with pilot data in hand.
 
-*Sources verified 2026-08-22: VISTA project page (vista-research.github.io), NVIDIA AVO blog + arXiv 2603.24517, pbshgthm/arc-skill README, arcprize/arc-agi toolkit README, ARC Prize's arc-agi-3-benchmarking repo. Re-verify before citation.*
+**Execution note (2026-08-26):** the vendor harness is POSIX-only (`os.getuid`,
+`AF_UNIX` broker sockets) — Step 0 runs through **WSL2 Ubuntu** on the Desktop;
+`sb26` verified to start in the local simulator with **no ARC key** (durable cache;
+key needed only for uncached game downloads and competition mode).
+
+*Sources: acquired and verified per-claim 2026-08-26 — see `Sources/Source_Index.md`. Note the AVO scope split: every ARC-AGI-3 claim is **blog-only**; arXiv 2603.24517 contains no ARC content (Gotchas #307). The original 2026-08-22 line here checked only that the sources exist, and its "blog + arXiv" pairing is superseded.*

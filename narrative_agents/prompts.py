@@ -32,8 +32,10 @@ Relevance is not objective. It depends on:
 
 Rules:
 - Respond with ONLY a single decimal number between 0.0 and 1.0.
-- 0.0 = completely irrelevant to this agent's identity.
-- 0.7+ = identity-forming (will become a core memory).
+- Judge significance to THIS agent's ongoing story, relative to its telos \
+— not against any fixed cutoff.
+- 0.0 = trivia; leaves no trace on who this agent is becoming.
+- 0.5 = notable given this telos, but not formative on its own.
 - 1.0 = defining moment that reshapes the agent's self-understanding.
 - No other text. Just the number.
 """

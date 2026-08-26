@@ -1,0 +1,1 @@
+{"action":"ACTION5","because":"testing bottom-first column-pair reading order","detail":"prediction missed: level+1 \u2014 level did not advance","end_event":51,"grade":["\u2717 level+1 \u2014 level did not advance"],"kind":"act","level":2,"outcome":"SURPRISE","predict":"level+1","start_event":50,"timestamp":"2026-08-26T15:17:59.746922+00:00"}

@@ -3,8 +3,9 @@ Core implementation of Narrative Agent architecture.
 Where philosophy meets Python, reluctantly but necessarily.
 """
 
-from collections import deque
+from collections import Counter, deque
 from datetime import datetime
+from math import ceil
 from typing import Dict, Any, List, Optional, Tuple
 import random
 import json
@@ -42,12 +43,20 @@ class Experience:
 
 @dataclass
 class Memory:
-    """A memory is an interpreted experience."""
+    """A memory is an interpreted experience.
+
+    `relevance` is the scorer's raw output and is logged on every memory,
+    core or peripheral. `inaugural` pins the story's beginning under
+    budgeted selection; `displaced` marks a former core memory pushed to
+    the periphery by a stronger one (it keeps its interpretation).
+    """
     experience: Experience
     interpretation: str
     relevance: float
     connections: List[str] = field(default_factory=list)
-    
+    inaugural: bool = False
+    displaced: bool = False
+
     def __str__(self) -> str:
         return f"[{self.relevance:.2f}] {self.interpretation}: {self.experience.content}"
 
@@ -61,50 +70,112 @@ class NarrativeAgent:
     """
     
     def __init__(
-        self, 
+        self,
         name: str = "Agent",
         telos: Optional[Telos] = None,
-        context_window: int = 50
+        context_window: int = 50,
+        selection: str = "budgeted",
+        budget: Optional[int] = None,
+        floor: float = 0.30,
+        expected_n: Optional[int] = None,
     ):
+        if selection not in ("budgeted", "absolute"):
+            raise ValueError(f"selection must be 'budgeted' or 'absolute', got {selection!r}")
         self.name = name
         self.telos = telos or Telos.LEARNING
-        
+
+        # Selection rule (Experiment_Spec.md §6, ruled 2026-08-22).
+        # "absolute" keeps the v2 rule (relevance > 0.7) for reproducing the
+        # v2 numbers; "budgeted" is competitive selection under a capacity
+        # budget with a floor and a pinned inaugural memory.
+        self.selection = selection
+        if budget is None:
+            budget = ceil((expected_n or context_window) / 3)
+        # The core deque's maxlen must never evict behind the rule's back.
+        self.budget = max(1, min(budget, context_window))
+        self.floor = floor
+
         # Memory structures
         self.narrative_core = deque(maxlen=context_window)  # Identity-forming memories
         self.peripheral = deque(maxlen=context_window * 2)   # Incidental memories
-        
+
         # Character formation (Aristotelian hexis)
         self.virtues = {}  # Positive character traits
         self.vices = {}    # Negative character traits
         self.dispositions = {}  # Behavioral tendencies
-        
+
         # Statistics for analysis
         self.total_experiences = 0
         self.interpreted_experiences = 0
-        
+        self.raw_scores: List[float] = []  # every scorer output, core or not
+
     def experience(self, exp: Experience) -> Memory:
         """Process an experience into memory through interpretation."""
         self.total_experiences += 1
-        
+
         # Interpret through purpose (telos)
         interpretation = self._interpret_through_telos(exp)
         relevance = self._assess_relevance(exp)
-        
+        self.raw_scores.append(relevance)
+
         memory = Memory(
             experience=exp,
             interpretation=interpretation,
             relevance=relevance
         )
-        
-        # Store based on relevance
-        if relevance > 0.7:
-            self.narrative_core.append(memory)
-            self._update_character(memory)
-            self.interpreted_experiences += 1
+
+        if self.selection == "absolute":
+            # v2 rule, kept for reproducibility
+            if relevance > 0.7:
+                self._admit_to_core(memory)
+            else:
+                self.peripheral.append(memory)
+        else:
+            self._budgeted_admission(memory)
+
+        return memory
+
+    def _admit_to_core(self, memory: Memory) -> None:
+        """Entry to the core: character update fires here and only here."""
+        self.narrative_core.append(memory)
+        self._update_character(memory)
+        self.interpreted_experiences += 1
+
+    def _budgeted_admission(self, memory: Memory) -> None:
+        """
+        Budgeted competitive selection (Experiment_Spec.md §6):
+        an event's significance is its place among the others — the
+        configurational, Ricoeurian reading. Below the floor, trivia never
+        enters, even into an empty core. The first admitted memory is
+        pinned as the story's beginning (tell_story reads narrative_core[0]).
+        A full core admits a stronger memory by displacing its weakest
+        non-inaugural member, which keeps its interpretation and moves to
+        the periphery flagged `displaced`.
+        """
+        if memory.relevance < self.floor:
+            self.peripheral.append(memory)
+            return
+
+        if len(self.narrative_core) < self.budget:
+            if not self.narrative_core:
+                memory.inaugural = True
+            self._admit_to_core(memory)
+            return
+
+        contenders = [m for m in self.narrative_core if not m.inaugural]
+        if not contenders:  # budget of 1, held by the inaugural memory
+            self.peripheral.append(memory)
+            return
+        weakest = min(contenders, key=lambda m: m.relevance)
+        if memory.relevance > weakest.relevance:
+            weakest.displaced = True
+            survivors = [m for m in self.narrative_core if m is not weakest]
+            self.narrative_core.clear()
+            self.narrative_core.extend(survivors)
+            self.peripheral.append(weakest)
+            self._admit_to_core(memory)
         else:
             self.peripheral.append(memory)
-            
-        return memory
     
     def _interpret_through_telos(self, exp: Experience) -> str:
         if self.telos is None:
@@ -367,15 +438,36 @@ class NarrativeAgent:
         return story
     
     def memory_efficiency(self) -> Dict[str, Any]:
-        """Calculate memory efficiency metrics."""
+        """
+        Memory metrics. Under budgeted selection, "efficiency" is reported
+        as selection under a budget, alongside the raw score distribution
+        (so a reader can see scorer calibration per telos) and the core's
+        composition by experience type (Experiment_Spec.md §6).
+        """
+        scores = self.raw_scores
         return {
             'total_experiences': self.total_experiences,
             'core_memories': len(self.narrative_core),
             'peripheral_memories': len(self.peripheral),
             'memory_efficiency': (
-                len(self.narrative_core) / self.total_experiences * 100 
+                len(self.narrative_core) / self.total_experiences * 100
                 if self.total_experiences > 0 else 0
             ),
             'character_traits': len(self.virtues) + len(self.vices),
-            'behavioral_patterns': len(self.dispositions)
+            'behavioral_patterns': len(self.dispositions),
+            'selection': self.selection,
+            'budget': self.budget,
+            'floor': self.floor,
+            'telos': self.telos.value if self.telos else None,
+            'raw_scores': list(scores),
+            'raw_score_summary': {
+                'n': len(scores),
+                'min': min(scores) if scores else None,
+                'mean': sum(scores) / len(scores) if scores else None,
+                'max': max(scores) if scores else None,
+            },
+            'core_composition_by_type': dict(Counter(
+                m.experience.type for m in self.narrative_core
+            )),
+            'displaced_count': sum(1 for m in self.peripheral if m.displaced),
         }

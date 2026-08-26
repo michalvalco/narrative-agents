@@ -1,0 +1,1 @@
+{"action":"ACTION5","because":"test generic interact action with no coords, baseline probe","detail":"result matched the prediction","end_event":4,"grade":["\u2713 change"],"kind":"act","level":1,"outcome":"PREDICTED","predict":"change","start_event":3,"timestamp":"2026-08-26T14:49:52.600714+00:00"}
