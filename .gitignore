@@ -147,5 +147,8 @@ vendor/
 
 # Experiment recordings are COMMITTED (ruled 2026-08-26, Spec §8.5).
 # The global *.png rule above keeps rendered frames out (re-renderable
-# via `arc view`); dry-run probes stay local:
+# via `arc view`); dry-run probes and per-run broker runtime stay local:
 *.dryrun.jsonl
+runs/**/.arc/broker.*
+runs/**/.arc/run.lock
+runs/**/.arc/python

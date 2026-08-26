@@ -12,4 +12,4 @@ accounting: turn, input/output/cache_read/cache_write tokens).
 
 | Cell | Created | Status | Notes |
 |---|---|---|---|
-| step0 | 2026-08-26 | dry-run only | `cost.dryrun.jsonl` probe; live run pending Michal's go (Spec §8) |
+| step0 | 2026-08-26 | **executed** — 60 paid actions, 2 segments, 1 forced handoff | sb26 arm B on `claude-sonnet-5`; L1 complete, L2 parked unsolved at event 60 (replayable); 5,703 tokens/action blended, post-handoff burn 0, notes under cap ×2 — see `step0/COST_NOTES.md` and `step0/cost_segments.jsonl` |

@@ -30,4 +30,4 @@ Run the memory-schema ablation (`Experiment_Spec.md`): a controlled comparison o
 
 ## 5. Commitment
 
-Next action: finish the Step 0 live run (segmented WSL sessions, arm B, sb26 — in flight 2026-08-26), compute tokens/action → $/cell, and report what pilot shape fits under the $50 ceiling. Verifier: `runs/step0/` recordings + cost summary committed; `pytest` green.
+Next action: **Michal picks the pilot shape** (Spec §4 executed-block + `runs/step0/COST_NOTES.md`): (a) sb26-only incl. telos sub-study on Haiku 4.5 ≈ $30 API — fits $50; (b) full spec needs ≈$120–1,400 API or a raised ceiling; (c) subscription route (pilot as Claude Code subagents, as Step 0 ran) — no API dollars. Then schedule the September pilot. Verifier: Step 0 recordings + cost model committed on `ablation-setup`; `pytest` green; branch push/PR awaits Michal's trigger.

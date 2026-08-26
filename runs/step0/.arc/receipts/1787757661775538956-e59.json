@@ -1,0 +1,1 @@
+{"action":"ACTION5","because":"testing reversed box-allocation (upper=last3 target colors, lower=first4)","detail":"prediction missed: level+1 \u2014 level did not advance","end_event":59,"grade":["\u2717 level+1 \u2014 level did not advance"],"kind":"act","level":2,"outcome":"SURPRISE","predict":"level+1","start_event":58,"timestamp":"2026-08-26T15:21:01.774162+00:00"}

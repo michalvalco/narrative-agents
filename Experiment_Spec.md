@@ -69,6 +69,8 @@ Primary hypothesis: C ≥ B on (1) with lower (2) and (3), at equal (5). Null re
 
 If Step 0's number is acceptable: the pilot runs as a Claude Code routine / managed agent in the background during September–October; Michal reads results in November. Zero attention before then.
 
+**Step 0 EXECUTED 2026-08-26** (sb26, arm B, `claude-sonnet-5`, 60 paid actions in two 30-action segments, one true forced handoff): **5,703 tokens/action blended** (4,508 easy-progress, 6,898 puzzle-grind), prediction accuracy 85%, **post-handoff burn 0**, both handoff notes under the 1,200-token cap. Dollar bounds and pilot arithmetic: `runs/step0/COST_NOTES.md`. Headline: the full-spec pilot does not fit the $50 ceiling on any tier (≈$120–1,400 API-billed); an sb26-only pilot incl. the telos sub-study fits on Haiku 4.5 (≈$12–70, mid ≈$30); running the pilot as Claude Code subagents (as Step 0 did) spends subscription capacity, not API dollars. Game parked replayable at event 60, level 2/8 (L2's ordering rule resisted five hypotheses; rules-tier is the named next move).
+
 ---
 
 ## 5. What the repo becomes (v3 layout, proposed)
