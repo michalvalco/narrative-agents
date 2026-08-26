@@ -121,7 +121,7 @@ independently against the settled post-action frame:
   `✗ <claim> — <actual>` (predictions.py:250-255).
 
 In `execute_action` (live.py:130-155): `ok = all(item["ok"] for item in graded)`; the event
-is stored with `predict`, `predict_ok`, and the full `grade` (live.py:133-135, persisted to
+is stored with `predict`, `predict_ok`, and the full `grade` (live.py:132-135, persisted to
 `.arc/events.jsonl` via `_record` → `append_event`); the receipt outcome is `"SURPRISE"`
 with `detail = f"prediction missed: {first_failed[2:]}"` when any part missed (live.py:151-153),
 `"PREDICTED"` / "result matched the prediction" otherwise (live.py:154-155). One wrong part
@@ -222,7 +222,7 @@ socket path in core.py:79-87).
   ~15-minute idle lease, no replay recovery) only when the user explicitly asks."
   README.md:179-180: "Use `--mode competition` for the live remote server (single run,
   ~15-minute idle lease, no replay recovery)."
-- Mode is sticky (EXPLICIT): "this directory already owns a {mode} run; mode cannot be
+- Mode is sticky (EXPLICIT): "this directory already owns a {existing_mode} run; mode cannot be
   changed in place" (cli.py:233-236).
 
 ---
@@ -294,7 +294,7 @@ one."
   `.arc/NOTES.md` with sections "Verified (cite event ids)", "Assumed / open questions",
   "Plan" (template written by `_write_notes`, cli.py:194-205). "Claude Code compacted its
   own context 115 times over this campaign … The pages stayed at a median of 60 lines"
-  (README.md:82-88). Notes are archived to `.arc/levels/level-N.md` on level completion
+  (README.md:81-88). Notes are archived to `.arc/levels/level-N.md` on level completion
   (`_archive_notes`, live.py:58-65).
 - **Rules tier** (EXPLICIT): optional executable model — `arc rules {help,init,replay,solve}`
   (cli.py:146-160; contract in rules.py:37-59 `RULES_HELP`: required functions

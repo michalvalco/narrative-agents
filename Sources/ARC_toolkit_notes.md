@@ -56,6 +56,13 @@ sentence, EXPLICIT: "All parameters can be overridden by environment variables, 
 constructor arguments taking precedence over environment variables." The docs page
 toolkit/arc_agi.md carries the same six parameters and adds: "All parameters are optional."
 
+> ⚠️ **Behavior caveat (2026-08-26 audit, against installed 0.9.9):** the quoted
+> precedence rule has one exception in the actual code — `base.py:101-111` comments
+> "Priority order for competition mode is different, the env var takes precedence over
+> the constructor arg": `OPERATION_MODE=competition` in the environment overrides the
+> constructor's `operation_mode`. The README is quoted faithfully above; the package
+> behaves differently for this one parameter.
+
 Key method, `make()` — EXPLICIT signature from both the README and toolkit/arc_agi.md:
 
 ```

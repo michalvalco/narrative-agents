@@ -15,7 +15,7 @@ Run the memory-schema ablation (`Experiment_Spec.md`): a controlled comparison o
 - v2 LLM run artifact: Performer/Explorer 0/10 core = threshold artifact, not finding (run log lines 200–210).
 - AVO's ARC-AGI-3 claims are **blog-only**; arXiv 2603.24517 has zero ARC content (Gotchas #307). VISTA has **no paper** — cite the site's `@misc` (`Sources/Source_Index.md`).
 - `.env` never tracked; `_Archive/` untracked 2026-08-26 (blobs remain in pushed history).
-- Only approved spend: none — Step 0 itself is 🟡 pending Michal; budget ceiling 🔴.
+- Approved spend (ruled 2026-08-26, Spec §8): Step 0 ✅ under a **$50 ceiling**, model `claude-sonnet-5` (Haiku 4.5 fallback); telos sub-study in pilot; `runs/` committed. Pilot spend beyond Step 0 waits for Step 0's cost number.
 
 ## 3. Self-knowledge
 
@@ -30,4 +30,4 @@ Run the memory-schema ablation (`Experiment_Spec.md`): a controlled comparison o
 
 ## 5. Commitment
 
-Next action: Michal decides `Experiment_Spec.md` §8 (Step 0 approval 🟡, then budget ceiling 🔴 after the cost number exists). Verifier: `run_step0.py --dry-run` passes offline; `pytest` green; Step 0 live run NOT executed until the go.
+Next action: finish the Step 0 live run (segmented WSL sessions, arm B, sb26 — in flight 2026-08-26), compute tokens/action → $/cell, and report what pilot shape fits under the $50 ceiling. Verifier: `runs/step0/` recordings + cost summary committed; `pytest` green.

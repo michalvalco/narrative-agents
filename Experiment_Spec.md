@@ -1,6 +1,6 @@
 # Experiment Spec — Memory-Schema Ablation on ARC-AGI-3
 
-**Version 0.1 — DRAFT, 2026-08-22** (Thinking-Layer design session; execution belongs to Claude Code). Status: proposed; Step 0 is the only approved action until Michal sets a budget ceiling (🔴). Companion documents: `Paper_Outline.md` (this repo), `Claude_Protocols/Harness_Design.md` §7 (why this experiment doubles as infrastructure R&D).
+**Version 0.1 — DRAFT, 2026-08-22** (Thinking-Layer design session; execution belongs to Claude Code). Status: **ruled 2026-08-26** — Step 0 approved and running, $50 ceiling set, tier/telos/runs decided (§8). Companion documents: `Paper_Outline.md` (this repo), `Claude_Protocols/Harness_Design.md` §7 (why this experiment doubles as infrastructure R&D).
 
 ---
 
@@ -65,7 +65,7 @@ Primary hypothesis: C ≥ B on (1) with lower (2) and (3), at equal (5). Null re
 
 ## 4. Cost control — Step 0 before anything else
 
-**Step 0 (approved in principle; ~1 hour of Michal's time):** one game (sb26), arm B, one seed. Purpose: measure tokens per action and per compaction with prompt caching on the skill text. Multiply by 24 cells → the pilot's price. **Budget ceiling is Michal's decision (🔴) and is set after this number exists, not before.**
+**Step 0 (approved in principle; ~1 hour of Michal's time):** one game (sb26), arm B, one seed. Purpose: measure tokens per action and per compaction with prompt caching on the skill text. Multiply by 24 cells → the pilot's price. **Budget ceiling is Michal's decision (🔴).** *(Ruled 2026-08-26: he set $50 ahead of the number — §8.2 — to be revisited once Step 0 reports; the set-after-measurement principle stands for the revisit.)*
 
 If Step 0's number is acceptable: the pilot runs as a Claude Code routine / managed agent in the background during September–October; Michal reads results in November. Zero attention before then.
 
@@ -142,4 +142,4 @@ Implementation: `PROMPT_Ablation_Setup_2026-08-22.md` Task D (flag-switched, off
 `sb26` verified to start in the local simulator with **no ARC key** (durable cache;
 key needed only for uncached game downloads and competition mode).
 
-*Sources verified 2026-08-22: VISTA project page (vista-research.github.io), NVIDIA AVO blog + arXiv 2603.24517, pbshgthm/arc-skill README, arcprize/arc-agi toolkit README, ARC Prize's arc-agi-3-benchmarking repo. Re-verify before citation.*
+*Sources: acquired and verified per-claim 2026-08-26 — see `Sources/Source_Index.md`. Note the AVO scope split: every ARC-AGI-3 claim is **blog-only**; arXiv 2603.24517 contains no ARC content (Gotchas #307). The original 2026-08-22 line here checked only that the sources exist, and its "blog + arXiv" pairing is superseded.*
