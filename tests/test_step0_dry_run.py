@@ -26,7 +26,8 @@ def test_write_cost_record_validates_fields(tmp_path):
         "turn": 1, "input_tokens": 10, "output_tokens": 2,
         "cache_read_tokens": 8, "cache_write_tokens": 0,
     })
-    rec = json.loads(open(path, encoding="utf-8").read())
+    with open(path, encoding="utf-8") as f:
+        rec = json.loads(f.read())
     assert rec["turn"] == 1 and "recorded_at" in rec
 
 
