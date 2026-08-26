@@ -138,6 +138,12 @@ Implementation: `PROMPT_Ablation_Setup_2026-08-22.md` Task D (flag-switched, off
 4. Telos sub-study — **runs in the pilot** (adds arm-C cells at a second telos).
 5. `runs/` recordings — **committed** (plain git, no LFS for now; `.gitignore`'s global
    `*.png` keeps rendered frames out — they re-render from the recording via `arc view`).
+6. **Pilot shape (ruled 2026-08-26, relayed via the Claude_Protocols session):**
+   **sb26-only, 8 cells** — arms A and B × 2 seeds, plus arm C × two teloi
+   (EXPLORING / PERFORMING, the telos sub-study) × 2 seeds — run the
+   **subscription way** (segmented Claude Code subagents, exactly as Step 0 ran).
+   The $50 API ceiling stays untouched as reserve; the full-spec decision waits
+   for October with pilot data in hand.
 
 **Execution note (2026-08-26):** the vendor harness is POSIX-only (`os.getuid`,
 `AF_UNIX` broker sockets) — Step 0 runs through **WSL2 Ubuntu** on the Desktop;

@@ -30,4 +30,4 @@ Run the memory-schema ablation (`Experiment_Spec.md`): a controlled comparison o
 
 ## 5. Commitment
 
-Next action: **Michal picks the pilot shape** (Spec §4 executed-block + `runs/step0/COST_NOTES.md`): (a) sb26-only incl. telos sub-study on Haiku 4.5 ≈ $30 API — fits $50; (b) full spec needs ≈$120–1,400 API or a raised ceiling; (c) subscription route (pilot as Claude Code subagents, as Step 0 ran) — no API dollars. Then schedule the September pilot. Verifier: Step 0 recordings + cost model committed on `ablation-setup`; `pytest` green; branch push/PR awaits Michal's trigger.
+Next action: run the **September pilot as ruled** (Spec §8.6): sb26-only, 8 cells (A×2, B×2, C-EXPLORING×2, C-PERFORMING×2), segmented Claude Code subagents per the Step 0 protocol (30-action segments, arm-specific handoff, cap ~250 paid actions/cell), recordings committed per cell. Full-spec decision in October with pilot data. Verifier: 8 cell rows in `runs/INDEX.md` flip from planned to executed; metrics computed via `metrics/`; `pytest` green.
