@@ -13,7 +13,7 @@ Run the memory-schema ablation (`Experiment_Spec.md`): a controlled comparison o
 - Note budget ≈ 1,200 tokens per arm; forced compaction every 30 turns.
 - `arc-agi==0.9.9` (arc-skill's pin); `vendor/arc-skill` @ `dba53c3` read-only, gitignored.
 - v2 LLM run artifact: Performer/Explorer 0/10 core = threshold artifact, not finding (run log lines 200–210).
-- AVO's ARC-AGI-3 claims are **blog-only**; arXiv 2603.24517 has zero ARC content (Gotchas #306). VISTA has **no paper** — cite the site's `@misc` (`Sources/Source_Index.md`).
+- AVO's ARC-AGI-3 claims are **blog-only**; arXiv 2603.24517 has zero ARC content (Gotchas #307). VISTA has **no paper** — cite the site's `@misc` (`Sources/Source_Index.md`).
 - `.env` never tracked; `_Archive/` untracked 2026-08-26 (blobs remain in pushed history).
 - Only approved spend: none — Step 0 itself is 🟡 pending Michal; budget ceiling 🔴.
 

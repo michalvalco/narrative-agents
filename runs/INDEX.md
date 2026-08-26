@@ -1,7 +1,8 @@
 # runs/ — recording index
 
-Recordings are **not committed** (`.gitignore`: `runs/*` except this file).
-This index is the committed record of what exists locally.
+Recordings are **committed** (ruled 2026-08-26, Spec §8.5) — except rendered
+frame PNGs (`.gitignore`'s global `*.png`; re-render via `arc view`) and
+local dry-run probes (`*.dryrun.jsonl`).
 
 Layout per cell: `runs/<cell>/` where `<cell>` is `step0` or
 `<game>-<arm>-<seed>` (e.g. `sb26-C-1`), holding the toolkit JSONL

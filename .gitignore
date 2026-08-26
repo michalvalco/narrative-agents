@@ -145,6 +145,7 @@ _Archive/
 # Read-only reference clones (commit hashes recorded in Sources/)
 vendor/
 
-# Experiment recordings (large; runs/INDEX.md is the committed index)
-runs/*
-!runs/INDEX.md
+# Experiment recordings are COMMITTED (ruled 2026-08-26, Spec §8.5).
+# The global *.png rule above keeps rendered frames out (re-renderable
+# via `arc view`); dry-run probes stay local:
+*.dryrun.jsonl

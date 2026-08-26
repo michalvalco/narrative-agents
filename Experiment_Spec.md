@@ -127,12 +127,19 @@ Implementation: `PROMPT_Ablation_Setup_2026-08-22.md` Task D (flag-switched, off
 
 ---
 
-## 8. Open decisions (Michal)
+## 8. Open decisions (Michal) — **RULED 2026-08-26**
 
-1. Approve Step 0 (one game, one arm, one seed) — 🟡.
-2. Budget ceiling after Step 0 — 🔴.
-3. Model tier for the pilot (Sonnet-class recommended; Haiku-class if Step 0 prices high).
-4. Whether the telos sub-study runs in the pilot or waits for signal.
-5. Whether `runs/` recordings are committed (git-lfs) or kept local with an index.
+1. Approve Step 0 — ✅ **APPROVED** (2026-08-26).
+2. Budget ceiling — **$50 for now** (2026-08-26; set ahead of Step 0's number, revisit after it).
+3. Model tier — **Sonnet 5** (`claude-sonnet-5`, $2/$10 per MTok), per recommendation;
+   Haiku 4.5 ($1/$5) is the fallback if Step 0 prices the pilot above the ceiling.
+4. Telos sub-study — **runs in the pilot** (adds arm-C cells at a second telos).
+5. `runs/` recordings — **committed** (plain git, no LFS for now; `.gitignore`'s global
+   `*.png` keeps rendered frames out — they re-render from the recording via `arc view`).
+
+**Execution note (2026-08-26):** the vendor harness is POSIX-only (`os.getuid`,
+`AF_UNIX` broker sockets) — Step 0 runs through **WSL2 Ubuntu** on the Desktop;
+`sb26` verified to start in the local simulator with **no ARC key** (durable cache;
+key needed only for uncached game downloads and competition mode).
 
 *Sources verified 2026-08-22: VISTA project page (vista-research.github.io), NVIDIA AVO blog + arXiv 2603.24517, pbshgthm/arc-skill README, arcprize/arc-agi toolkit README, ARC Prize's arc-agi-3-benchmarking repo. Re-verify before citation.*

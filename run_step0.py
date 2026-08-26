@@ -39,6 +39,9 @@ CONFIG = {
     "seed": 1,
     "compact_every": 30,        # forced compaction period, in turns
     "note_cap_tokens": 1200,
+    "model": "claude-sonnet-5",  # ruled 2026-08-26 (Spec §8.3); fallback claude-haiku-4-5
+    "budget_usd": 50,            # ceiling ruled 2026-08-26 (Spec §8.2)
+    "approved": "2026-08-26",    # Step 0 approved by Michal (Spec §8.1)
     "run_dir": os.path.join(REPO, "runs", "step0"),
     "skill": os.path.join(REPO, "harness", "arm_B", "SKILL.md"),
     "compaction_prompt": os.path.join(REPO, "compaction", "B_task_model.md"),
@@ -160,10 +163,13 @@ def main(argv=None) -> int:
     args = parser.parse_args(argv)
 
     if args.live:
-        print("REFUSED: Step 0 live spends model tokens and ARC API requests.")
-        print("It runs only on Michal's explicit go (Experiment_Spec.md §8: "
-              "approval, budget ceiling, model tier).")
-        print("When approved, launch:")
+        print("REFUSED: this script does not drive the model itself.")
+        print("Step 0 is approved (2026-08-26, ceiling $50, model "
+              f"{CONFIG['model']}), but the vendor harness is POSIX-only, so")
+        print("the live run goes through WSL2 as segmented Claude Code agent "
+              "sessions (30 paid actions per segment = one forced handoff);")
+        print("this script owns config, validation, and cost accounting only.")
+        print("Reference command shape:")
         print("  " + LIVE_COMMAND.format(**CONFIG))
         return 2
 
